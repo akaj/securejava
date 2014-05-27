@@ -24,10 +24,10 @@ public class UserDAO {
 	}
 	
 	public static synchronized void persist(User p) {
-		profiles.put(p.getUsername().unsafeStr(), p);
+		profiles.put(p.getUsername().rawString(), p);
 	}
 	
 	public static synchronized User getUser(Username username) {
-		return profiles.get(username.unsafeStr());
+		return profiles.get(username.rawString());
 	}
 }
