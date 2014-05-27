@@ -3,16 +3,20 @@ package fi.thl.example.actions;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fi.thl.example.model.AuditLog;
 import fi.thl.example.model.Password;
+import fi.thl.example.model.Status;
 import fi.thl.example.model.User;
 import fi.thl.example.model.Username;
+import fi.thl.example.servlet.Action;
 import fi.thl.example.servlet.UserDAO;
 
 public class LoginCommand extends BaseCommand {
     boolean loginOk;
-
+    AuditLog log=new AuditLog();
     public LoginCommand(HttpServletRequest req, HttpServletResponse resp) {
         super(req, resp);
+        
     }
 
     @Override
@@ -32,6 +36,7 @@ public class LoginCommand extends BaseCommand {
         if (this.req.getMethod().equals("POST")) {
             User user = UserDAO.getUser(
                     (Username) this.validatedInput.get("username"));
+            log.log(req.getParameter("username"),"",Action.login, user, Status.SUCCESS);
             if (user != null && user.getPassword()
                     .equals(this.validatedInput.get("password"))) {
                 req.getSession().setAttribute("user", user);
