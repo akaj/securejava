@@ -3,8 +3,12 @@ package fi.thl.example.actions;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.common.base.Preconditions;
+
+import fi.thl.example.model.User;
 import fi.thl.example.model.Username;
 import fi.thl.example.servlet.RequestParameter;
+import fi.thl.example.servlet.UserDAO;
 
 public class ViewProfileCommand extends BaseCommand {
 
@@ -15,6 +19,7 @@ public class ViewProfileCommand extends BaseCommand {
 
     @Override
     public void authenticate() {
+        Preconditions.checkNotNull(req.getSession().getAttribute("user"));
     }
 
     @Override
@@ -35,8 +40,13 @@ public class ViewProfileCommand extends BaseCommand {
 
     @Override
     public String renderHtml() {
-        //UserDAO.getUser(validatedInput.get(RequestParameter.username));
-        return "<html><head></head><body></body></html>";
+        User user = UserDAO.getUser(
+                (Username) validatedInput.get(RequestParameter.username));
+        return "<html><body>" +
+                "<h1>" + user.getUsername().html() + "</h1>" +
+                "<p>" + user.getEmail().html() + "</p>" +
+                "<address>" + user.getAddress().html() + "</address>" +
+                "</body></html>";
     }
 
 }
