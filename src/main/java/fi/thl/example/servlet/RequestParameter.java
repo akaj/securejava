@@ -2,6 +2,6 @@ package fi.thl.example.servlet;
 
 public enum RequestParameter {
 
-    ACTION, USERNAME, PASSWORD, ADDRESS, EMAIL
+    action, username, password, address, email
 
 }

@@ -18,7 +18,7 @@ public class SimpleServlet extends HttpServlet {
 
     static {
         commands = new HashMap<Action, Class<? extends BaseCommand>>();
-        commands.put(Action.LOGIN, LoginCommand.class);
+        commands.put(Action.login, LoginCommand.class);
     }
 
     @Override
@@ -26,9 +26,8 @@ public class SimpleServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // throws exception if action not in enum
-        Action action = Action.valueOf(req.getParameter(
-                        RequestParameter.ACTION.toString().toLowerCase())
-        );
+        Action action = Action.valueOf(
+                req.getParameter(RequestParameter.action.toString()));
         BaseCommand command = null;
         try {
             command = commands.get(action)
