@@ -71,5 +71,4 @@ public class LoginCommand extends BaseCommand {
                     "</body></html>";
         }
     }
-
 }

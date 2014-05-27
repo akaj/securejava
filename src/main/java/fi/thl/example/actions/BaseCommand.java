@@ -30,13 +30,14 @@ public abstract class BaseCommand {
 	public String doRequest() {
 		try {
 		    authenticate();
-		    authorize();
 		    validateParameters();
+		    authorize();
 	 	    doAction();
 	 	    return renderHtml();
 		} catch (SuspiciousOperation e) {
 			// logger!
-			return "<h1>Unhandled error!</h1>";
+			// return "<h1>Unhandled error!</h1>";
+			throw e;
 		}
 	}
 }
