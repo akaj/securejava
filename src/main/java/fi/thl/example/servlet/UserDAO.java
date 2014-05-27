@@ -1,16 +1,33 @@
 package fi.thl.example.servlet;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import fi.thl.example.model.Address;
+import fi.thl.example.model.Email;
+import fi.thl.example.model.Password;
+import fi.thl.example.model.User;
+import fi.thl.example.model.Username;
 
 public class UserDAO {
-	private static List<Profile> profiles;
+	private static Map<String, User> profiles;
 	
 	static {
-		profiles = new ArrayList<Profile>();
+		profiles = new HashMap<String, User>();
+		persist(
+			new User(
+				new Username("akaj"),
+				new Address("Tilkanmäki <script>alert('hello')</script> 123, 00100 Helsinki"),
+				new Email("anssi.kaariainen@thl.fi"),
+				new Password("salasana")
+		));
 	}
 	
-	public void addProfile(Profile p) {
-		profiles.add(p);
+	public static synchronized void persist(User p) {
+		profiles.put(p.getUsername().unsafeStr(), p);
+	}
+	
+	public static synchronized User getUser(Username username) {
+		return profiles.get(username.unsafeStr());
 	}
 }

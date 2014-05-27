@@ -7,10 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fi.thl.example.model.User;
+import fi.thl.example.model.Username;
+
+
 public class SimpleServlet extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-
     private static final String ACTION_PARAMETER = "action";
     private static final String USERNAME_PARAMETER = "username";
     private static final String PASSWORD_PARAMETER = "password";
@@ -23,11 +24,10 @@ public class SimpleServlet extends HttpServlet {
 
         // throws exception if action not in enum
         Action action = Action.valueOf(req.getParameter(ACTION_PARAMETER));
-
         resp.setContentType("text/html");
-        Profile bo = new Profile();
+        User bo = UserDAO.getUser(new Username("akaj"));
         resp.getWriter().write("<html><head></head><body>" +
-                        bo.getContent(req.getParameter("foo")) +
+                        bo.getAddress().html() +
                         "</body></html>"
         );
     }
