@@ -31,10 +31,23 @@ public abstract class BaseCommand {
 	public abstract void doAction();
 	public abstract String renderHtml();
 	
+	public boolean checkCSRF() {
+		return true;
+	}
+	
+	public void doCSRFCheck() {
+		if (req.getMethod().equals("POST")) {
+			if (!checkCSRF()) {
+				throw new SuspiciousOperation("CSRF check failed");
+			}
+		}
+	}
+	
 	public String doRequest() {
 		try {
 		    authenticate();
 		    validateParameters();
+		    doCSRFCheck();
 		    authorize();
 	 	    doAction();
 	 	    return renderHtml();
