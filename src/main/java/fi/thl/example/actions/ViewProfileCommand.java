@@ -40,8 +40,8 @@ public class ViewProfileCommand extends BaseCommand {
 
     @Override
     public String renderHtml() {
-        User user = UserDAO.getUser(
-                (Username) validatedInput.get(RequestParameter.username));
+        User user = UserDAO.getUser((Username) validatedInput
+                .get(RequestParameter.username.toString()));
         return "<html><body>" +
                 "<h1>" + user.getUsername().html() + "</h1>" +
                 "<p>" + user.getEmail().html() + "</p>" +

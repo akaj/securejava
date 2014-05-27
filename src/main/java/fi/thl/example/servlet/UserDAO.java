@@ -28,6 +28,6 @@ public class UserDAO {
 	}
 	
 	public static synchronized User getUser(Username username) {
-		return profiles.get(username.rawString());
+        return profiles.get(username.rawString());
 	}
 }

@@ -1,5 +1,7 @@
 package fi.thl.example.model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +44,14 @@ public abstract class SecureString {
 
     public String html() {
         return StringEscapeUtils.escapeHtml(this.rawString());
+    }
+
+    public String url() {
+        try {
+            return URLEncoder.encode(this.rawString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // utf-8 should be supported
+            throw new AssertionError(e);
+        }
     }
 }
