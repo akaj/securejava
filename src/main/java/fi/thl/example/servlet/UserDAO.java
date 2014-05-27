@@ -21,6 +21,13 @@ public class UserDAO {
 				new Email("anssi.kaariainen@thl.fi"),
 				new Password("salasana")
 		));
+		persist(
+				new User(
+						new Username("admin"),
+						new Address("Tilkanmäki 123, 00100 Helsinki"),
+						new Email("admin@thl.fi"),
+						new Password("admin")
+				));
 	}
 	
 	public static synchronized void persist(User p) {

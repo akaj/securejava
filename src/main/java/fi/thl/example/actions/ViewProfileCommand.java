@@ -46,7 +46,9 @@ public class ViewProfileCommand extends BaseCommand {
                 "<h1>" + user.getUsername().html() + "</h1>" +
                 "<p>" + user.getEmail().html() + "</p>" +
                 "<address>" + user.getAddress().html() + "</address>" +
-                "</body></html>";
+                "</body>" +
+                "<a href=\"SimpleServlet?action=edit_profile&username=" + user.getUsername().url() + "\">Muokkaa</a>" +
+                "</html>";
     }
 
 }

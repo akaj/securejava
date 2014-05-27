@@ -37,11 +37,14 @@ public class EditProfileCommand extends BaseCommand {
     @Override
     public void doAction() {
         // Note: vulnerable to timing attacks...
-        User user =
-                UserDAO.getUser((Username) this.validatedInput.get("username"));
-        if (user != null && user.getPassword()
-                .equals(this.validatedInput.get("password"))) {
-            req.getSession().setAttribute("user", user);
+        if (req.getMethod().equals("POST")) {
+        	user = new User(
+        			user.getUsername(),
+        			(Address)validatedInput.get("address"),
+        			(Email)validatedInput.get("email"),
+        			user.getPassword()
+        			);
+        	UserDAO.persist(user);
         }
     }
 
@@ -70,8 +73,23 @@ public class EditProfileCommand extends BaseCommand {
 
     @Override
     public String renderHtml() {
-        return "<html><head></head><body>Muokataan käyttäjää " + this.user.getUsername().html() +
-                "</body></html>";
+    	  if (this.req.getMethod().equals("POST")) {
+              return "<html><body>" +
+                      "Edit onnistui." +
+                      "<a href=\"SimpleServlet?action=view_profile&username=" +
+                      validatedInput.get("username").url() +
+                      "\">Eteenpäin</a>" +
+                      "</body></html>";
+          } else {
+              return "<html><body>" +
+                      "Muokkaa " +
+                      "<form action=\"SimpleServlet?action=edit_profile&username=" + this.user.getUsername().url() + "\" method=\"POST\">" +
+                      "Address: <input type=\"text\" name=\"address\" value=\"" + this.user.getAddress().html() + "\" />" +
+                      "Email: <input name=\"email\" type=\"text\" value=\"" + this.user.getEmail().html() + "\" />" +
+                      "<input type=\"submit\" />" +
+                      "</form>" +
+                      "</body></html>";
+          }
     }
 
 }
