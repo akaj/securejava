@@ -36,12 +36,14 @@ public class LoginCommand extends BaseCommand {
         if (this.req.getMethod().equals("POST")) {
             User user = UserDAO.getUser(
                     (Username) this.validatedInput.get("username"));
-            log.log(req.getParameter("username"),"",Action.login, user, Status.SUCCESS);
+            
             if (user != null && user.getPassword()
                     .equals(this.validatedInput.get("password"))) {
                 req.getSession().setAttribute("user", user);
                 loginOk = true;
+                log.log(req.getParameter("username"),"",Action.login, user, Status.SUCCESS);
             }
+           
         }
     }
 
