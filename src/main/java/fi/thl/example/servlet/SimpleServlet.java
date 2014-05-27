@@ -24,7 +24,13 @@ public class SimpleServlet extends HttpServlet {
         commands.put(Action.edit_profile, EditProfileCommand.class);
         commands.put(Action.view_profile, ViewProfileCommand.class);
     }
-
+	
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+		this.doGet(req, resp);
+    }
+	
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
