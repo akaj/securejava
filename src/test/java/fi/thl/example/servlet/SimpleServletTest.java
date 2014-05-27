@@ -27,4 +27,19 @@ public class SimpleServletTest {
         simpleServlet.doGet(req, res);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void unknownActionShouldThrowIllegalArgumentException()
+            throws ServletException, IOException {
+        SimpleServlet simpleServlet = new SimpleServlet();
+
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        given(req.getParameter("action"))
+                .willReturn("illegal-or-unknown-action");
+
+        HttpServletResponse res = mock(HttpServletResponse.class);
+
+        // throws illegal argument exception
+        simpleServlet.doGet(req, res);
+    }
+
 }

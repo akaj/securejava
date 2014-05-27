@@ -21,11 +21,8 @@ public class SimpleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        // throws exception if action not in enum
         Action action = Action.valueOf(req.getParameter(ACTION_PARAMETER));
-
-
-
-
 
         resp.setContentType("text/html");
         Profile bo = new Profile();
