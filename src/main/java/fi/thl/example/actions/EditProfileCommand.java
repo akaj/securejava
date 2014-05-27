@@ -3,7 +3,8 @@ package fi.thl.example.actions;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fi.thl.example.model.Password;
+import fi.thl.example.model.Address;
+import fi.thl.example.model.Email;
 import fi.thl.example.model.User;
 import fi.thl.example.model.Username;
 import fi.thl.example.servlet.RequestParameter;
@@ -43,11 +44,11 @@ public class EditProfileCommand extends BaseCommand {
     @Override
     public void validateParameters() {
         this.validatedInput.put(RequestParameter.address.toString(),
-                new Username(
+                new Address(
                         req.getParameter(RequestParameter.address.toString()))
         );
-        this.validatedInput.put(RequestParameter.email.toString(), new Password(
-                        req.getParameter(RequestParameter.email.toString()))
+        this.validatedInput.put(RequestParameter.email.toString(),
+                new Email(req.getParameter(RequestParameter.email.toString()))
         );
     }
 

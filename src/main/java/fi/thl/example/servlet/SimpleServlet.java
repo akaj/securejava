@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fi.thl.example.actions.BaseCommand;
+import fi.thl.example.actions.EditProfileCommand;
 import fi.thl.example.actions.LoginCommand;
+import fi.thl.example.actions.ViewProfileCommand;
 
 public class SimpleServlet extends HttpServlet {
     static Map<Action, Class<? extends BaseCommand>> commands;
@@ -19,6 +21,8 @@ public class SimpleServlet extends HttpServlet {
     static {
         commands = new HashMap<Action, Class<? extends BaseCommand>>();
         commands.put(Action.login, LoginCommand.class);
+        commands.put(Action.edit_profile, EditProfileCommand.class);
+        commands.put(Action.view_profile, ViewProfileCommand.class);
     }
 
     @Override
