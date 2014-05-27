@@ -4,15 +4,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fi.thl.example.model.Address;
+import fi.thl.example.model.AuditLog;
 import fi.thl.example.model.Email;
+import fi.thl.example.model.Status;
 import fi.thl.example.model.User;
 import fi.thl.example.model.Username;
+import fi.thl.example.servlet.Action;
 import fi.thl.example.servlet.RequestParameter;
 import fi.thl.example.servlet.SuspiciousOperation;
 import fi.thl.example.servlet.UserDAO;
 
 public class EditProfileCommand extends BaseCommand {
 	User user;
+	AuditLog log=new AuditLog();
 	
     public EditProfileCommand(HttpServletRequest req,
             HttpServletResponse resp) {
@@ -45,6 +49,7 @@ public class EditProfileCommand extends BaseCommand {
         			user.getPassword()
         			);
         	UserDAO.persist(user);
+        	log.log(req.getParameter("username"),"",Action.edit_profile, user, Status.SUCCESS);
         }
     }
 

@@ -7,13 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Maps;
 
+import fi.thl.example.model.AuditLog;
 import fi.thl.example.model.SecureString;
+import fi.thl.example.model.Status;
+import fi.thl.example.servlet.Action;
 import fi.thl.example.servlet.SuspiciousOperation;
 
 public abstract class BaseCommand {
 	HttpServletRequest req;
 	HttpServletResponse resp;
 	Map<String, SecureString> validatedInput;
+	AuditLog log=new AuditLog();
 	
 	public BaseCommand(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
@@ -35,9 +39,8 @@ public abstract class BaseCommand {
 	 	    doAction();
 	 	    return renderHtml();
 		} catch (SuspiciousOperation e) {
-			// logger!
-			// return "<h1>Unhandled error!</h1>";
-			throw e;
+			log.log("SUSPICIOUS OPERATION", e.getMessage(), Action.edit_profile, null, Status.FAILED);
+			return "<h1>Unhandled error!</h1>";
 		}
 	}
 }

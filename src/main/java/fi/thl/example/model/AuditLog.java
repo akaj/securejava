@@ -9,6 +9,8 @@ public class AuditLog {
 	 
 	 private final Logger log = LoggerFactory.getLogger(getClass());
      public void log(String parameter,String encoded,Action action,User user,Status status){
+    	 String msg = "PARAMETER="+parameter + ":ENCODED="+encoded + ":ACTION="+action + ":USER="+user + ":STATUS"+status;
+    	 System.out.println(msg);
     	 log.debug("PARAMETER="+parameter,":ENCODED="+encoded,":ACTION="+action,":USER="+user,":STATUS"+status);	 
      }
      
